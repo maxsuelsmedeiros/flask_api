@@ -1,4 +1,6 @@
 from flask import Flask
+from flask import request
+from markupsafe import escape
 from src.letter_counter import TextCounter
 import logging
 import os
@@ -30,11 +32,12 @@ app : Flask = Flask(__name__)
 tc : TextCounter = TextCounter()
 @app.route('/')
 def main() -> str:
-    return 'Welcome to the Text Counter API!'
+    name = request.args.get("name", "Flask")
+    return f'Welcome to the {escape(name)} Text Counter API!'
 
 #adding the character counter
 
-@app.route('/all_char_counter/')
+@app.route('/all_char_counter/',methods=['POST'])
 def chars_counter() -> str:
     return str(tc.characters_total_count(''))
 

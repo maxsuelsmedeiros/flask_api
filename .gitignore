@@ -195,3 +195,4 @@ cython_debug/
 
 #ignoring virtual environment
 .flask_project_venv
+test/

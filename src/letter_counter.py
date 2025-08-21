@@ -1,4 +1,5 @@
 # This module reads the all the characters from the text the user sends and respond with the many details, based on the method requested
+# add a Levenshtein distance method
 import logging
 
 class TextCounter:
@@ -18,6 +19,10 @@ class TextCounter:
     def __repr__(self) -> str:
         self.logger.debug(msg='Returning class representation.')
         return 'TextCounter'
-    
-    def characters_total_count(self, input_text : str) -> int:
-        return 0 
+    #return the number of charachters of a input
+    def characters_total_count(self, input_text : str) -> dict[str,int]:
+        counter : dict = dict()
+        input_text_without_spaces : str = input_text.replace(' ', '')
+        for letter in input_text_without_spaces:
+            counter[letter] = counter.get(letter,0) + 1
+        return counter
