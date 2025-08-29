@@ -1,8 +1,10 @@
 # This module reads the all the characters from the text the user sends and respond with the many details, based on the method requested
 # add a Levenshtein distance method
 import logging
+import re
+import unicodedata
 
-class TextCounter:
+class TextManipulator:
 
     logger: logging.Logger
 
@@ -19,6 +21,17 @@ class TextCounter:
     def __repr__(self) -> str:
         self.logger.debug(msg='Returning class representation.')
         return 'TextCounter'
+    
+    #remove special characters from a input
+    def remove_special_characters(self, input_text: str) -> str:
+        normalizedtext = unicodedata.normalize('NFD', input_text)
+        # Remove acentos
+        no_accents = ''.join(
+            c for c in normalizedtext if unicodedata.category(c) != 'Mn'
+        )
+        # Remove caracteres especiais, mantendo letras, números e espaços
+        cleanString = re.sub(r'[^A-Za-z0-9 ]+', '', no_accents)
+        return cleanString
     #return the number of charachters of a input
     def characters_total_count(self, input_text : str) -> dict[str,int]:
         counter : dict = dict()

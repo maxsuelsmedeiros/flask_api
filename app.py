@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 from markupsafe import escape
-from src.letter_counter import TextCounter
+from src.letter_counter import TextManipulator
 import logging
 import os
 #confing and adding the logger for debuging and logging purposes
@@ -29,7 +29,7 @@ except Exception as e:
     logger.error(msg='An unexpected error has ocurred!',exc_info=True)
 
 app : Flask = Flask(__name__)
-tc : TextCounter = TextCounter()
+tc : TextManipulator = TextManipulator()
 @app.route('/')
 def main() -> str:
     name = request.args.get("name", "Flask")
